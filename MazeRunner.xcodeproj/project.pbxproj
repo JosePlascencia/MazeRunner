@@ -15,6 +15,8 @@
 		82096E261F63B28B00AF1837 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82096E241F63B28B00AF1837 /* LaunchScreen.storyboard */; };
 		82096E311F63B28B00AF1837 /* MazeRunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82096E301F63B28B00AF1837 /* MazeRunnerTests.swift */; };
 		82096E3C1F63B28C00AF1837 /* MazeRunnerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82096E3B1F63B28C00AF1837 /* MazeRunnerUITests.swift */; };
+		82096E4E1F63CD5E00AF1837 /* genmaze.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82096E4D1F63CD5E00AF1837 /* genmaze.swift */; };
+		82096E501F63CD9100AF1837 /* bensound-epic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 82096E4F1F63CD9100AF1837 /* bensound-epic.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		82096E371F63B28C00AF1837 /* MazeRunnerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MazeRunnerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		82096E3B1F63B28C00AF1837 /* MazeRunnerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MazeRunnerUITests.swift; sourceTree = "<group>"; };
 		82096E3D1F63B28C00AF1837 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		82096E4D1F63CD5E00AF1837 /* genmaze.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = genmaze.swift; sourceTree = "<group>"; };
+		82096E4F1F63CD9100AF1837 /* bensound-epic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "bensound-epic.mp3"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +103,8 @@
 		82096E171F63B28B00AF1837 /* MazeRunner */ = {
 			isa = PBXGroup;
 			children = (
+				82096E4F1F63CD9100AF1837 /* bensound-epic.mp3 */,
+				82096E4D1F63CD5E00AF1837 /* genmaze.swift */,
 				82096E181F63B28B00AF1837 /* AppDelegate.swift */,
 				82096E1A1F63B28B00AF1837 /* ViewController.swift */,
 				82096E1C1F63B28B00AF1837 /* Main.storyboard */,
@@ -238,6 +244,7 @@
 				82096E261F63B28B00AF1837 /* LaunchScreen.storyboard in Resources */,
 				82096E231F63B28B00AF1837 /* Assets.xcassets in Resources */,
 				82096E1E1F63B28B00AF1837 /* Main.storyboard in Resources */,
+				82096E501F63CD9100AF1837 /* bensound-epic.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,6 +272,7 @@
 				82096E1B1F63B28B00AF1837 /* ViewController.swift in Sources */,
 				82096E211F63B28B00AF1837 /* MazeRunner.xcdatamodeld in Sources */,
 				82096E191F63B28B00AF1837 /* AppDelegate.swift in Sources */,
+				82096E4E1F63CD5E00AF1837 /* genmaze.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -511,6 +519,7 @@
 				82096E421F63B28C00AF1837 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		82096E431F63B28C00AF1837 /* Build configuration list for PBXNativeTarget "MazeRunnerTests" */ = {
 			isa = XCConfigurationList;
@@ -519,6 +528,7 @@
 				82096E451F63B28C00AF1837 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		82096E461F63B28C00AF1837 /* Build configuration list for PBXNativeTarget "MazeRunnerUITests" */ = {
 			isa = XCConfigurationList;
@@ -527,6 +537,7 @@
 				82096E481F63B28C00AF1837 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
