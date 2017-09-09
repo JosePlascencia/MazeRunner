@@ -202,6 +202,7 @@
 				TargetAttributes = {
 					82096E141F63B28B00AF1837 = {
 						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = 2676934267;
 						ProvisioningStyle = Automatic;
 					};
 					82096E2B1F63B28B00AF1837 = {
@@ -426,6 +427,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 2676934267;
 				INFOPLIST_FILE = MazeRunner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.TheJJJImrons.MazeRunner;
@@ -438,6 +440,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 2676934267;
 				INFOPLIST_FILE = MazeRunner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.TheJJJImrons.MazeRunner;
