@@ -12,17 +12,13 @@ import CoreMotion
 
 
 class ViewController: UIViewController {
-    //views
-    
     //gameview
-    @IBOutlet weak var GameView: UIStackView!
     @IBOutlet weak var gameField: UIStackView!
-    @IBOutlet weak var player_sprite: UILabel!
     
-    let wallColor = UIColor.black
-    let spaceColor = UIColor.green
-    let startColor = UIColor.blue
-    let endColor = UIColor.red
+    let wallImg = UIImage(named: "wall.jpg")
+    let spaceImg = UIImage(named: "space.jpg")
+    let startImg = UIImage(named: "start.jpg")
+    let endImg = UIImage(named: "end.jpg")
     
     var backGroundPlayer = AVAudioPlayer()
     
@@ -31,8 +27,7 @@ class ViewController: UIViewController {
     
     //GLOBAL VARIABLES FOR HIEGHT AND WIDTH OF MAZES(both must be odd)
     let HEIGHT = 21
-    let WIDHT = 21
-    var FRAME_SIZE : CGRect = CGRect()
+    let WIDTH = 21
     
     //initial location for start of maze and end of maze
     var mStartY = 20
@@ -44,10 +39,11 @@ class ViewController: UIViewController {
         var y: Int = 0
     }
     var player = Player(x: 0, y: 0)
-    
+    var isMovable = true
     enum Movement{
-        case Up,Down,Right,Left
+        case Up, Down, Right, Left
     }
+    @IBOutlet weak var player_sprite: UIImageView!
     
     //game vars
     var score = 0
@@ -75,32 +71,25 @@ class ViewController: UIViewController {
                         
                         if abs(pitch) < abs(roll){
                             if roll > 5{
-                                print("moving down")
                                 self.movePlayer(moveTo: Movement.Down)
                             }else if roll < -5 {
-                                print("moving down")
                                 self.movePlayer(moveTo: Movement.Up)
                             }
                         }else {
                             if pitch > 5 {
-                                print("moving right")
                                 self.movePlayer(moveTo: Movement.Right)
                             }else if pitch < -5 {
-                                print("moving left")
                                 self.movePlayer(moveTo: Movement.Left)
                             }
                         }
-                        print(self.player)
                         
                         self.displayPlayer()
-//                        print("pitch", self.degrees(radians: attitude.pitch))
-//                        print("roll", self.degrees(radians: attitude.roll))
-                        
                     }
                 }
             }
             else {
                 print("We cannot detect motion")
+                self.displayPlayer()
             }
         }
         else {
@@ -108,87 +97,94 @@ class ViewController: UIViewController {
         }
         
     }
-    func displayPlayer(){
-        DispatchQueue.main.async{
-            self.player_sprite.frame.size = self.FRAME_SIZE.size
-            self.player_sprite.frame.offsetBy(dx: CGFloat(self.player.x), dy: CGFloat(self.player.y))
-        }
-    }
-    func movePlayer(moveTo: Movement){
-        switch moveTo {
-        case Movement.Down:
-            if self.player.y != 0 && maze[self.player.y-1][self.player.x].type != Tiles.Wall{
-                self.player.y -= 1
-                if maze[self.player.y][self.player.x].type == Tiles.End{
-                    mStartY = 0
-                    mStartX = self.player.x
-                    DispatchQueue.main.async{
-                        for toRemove in self.gameField.arrangedSubviews{
-                            self.gameField.removeArrangedSubview(toRemove)
-                        }
-                        self.genNewMaze()
-                    }
-                }
-            }
-        case Movement.Up:
-            if self.player.y != HEIGHT-1 && maze[self.player.y+1][self.player.x].type != Tiles.Wall{
-                self.player.y += 1
-                if maze[self.player.y][self.player.x].type == Tiles.End{
-                    mStartY = HEIGHT - 1
-                    mStartX = self.player.x
-                    DispatchQueue.main.async{
-                        for toRemove in self.gameField.arrangedSubviews{
-                            self.gameField.removeArrangedSubview(toRemove)
-                        }
-                        self.genNewMaze()
-                    }
-                }
-            }
-        case Movement.Right:
-            if self.player.x != WIDHT-1 && maze[self.player.y][self.player.x+1].type != Tiles.Wall{
-                self.player.x += 1
-                if maze[self.player.y][self.player.x].type == Tiles.End{
-                    mStartY = self.player.y
-                    mStartX = 0
-                    DispatchQueue.main.async{
-                        for toRemove in self.gameField.arrangedSubviews{
-                            self.gameField.removeArrangedSubview(toRemove)
-                        }
-                        self.genNewMaze()
-                    }
-                }
-            }
-        case Movement.Left:
-            if self.player.x != 0 && maze[self.player.y][self.player.x-1].type != Tiles.Wall{
-                self.player.x -= 1
-                if maze[self.player.y][self.player.x].type == Tiles.End{
-                    mStartY = self.player.y
-                    mStartX = WIDHT - 1
-                    DispatchQueue.main.async{
-                        for toRemove in self.gameField.arrangedSubviews{
-                            self.gameField.removeArrangedSubview(toRemove)
-                        }
-                        self.genNewMaze()
-                    }
-                }
-            }
-        }
-    }
-    
-    // Radians to degrees conversion
-    func degrees(radians: Double) -> Double {
-        return 180/Double.pi * radians
-    }
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func displayPlayer(){
+        DispatchQueue.main.async{
+            let w = self.gameField.subviews[self.player.y].subviews[self.player.x].frame.size.width
+            let h = self.gameField.subviews[self.player.y].subviews[self.player.x].frame.size.height
+            
+            self.player_sprite.frame = CGRect(x: self.gameField.frame.origin.x + (CGFloat(self.player.x) * w), y: self.gameField.frame.origin.y + (CGFloat(self.player.y) * h), width: w, height: h)
+        }
+    }
+    func movePlayer(moveTo: Movement){
+        if isMovable{
+            switch moveTo {
+            case Movement.Down:
+                if self.player.y != 0 && maze[self.player.y-1][self.player.x].type != Tiles.Wall{
+                    self.player.y -= 1
+                    if maze[self.player.y][self.player.x].type == Tiles.End{
+                        isMovable = false
+                        mStartY = 0
+                        mStartX = self.player.x
+                        DispatchQueue.main.async{
+                            for toRemove in self.gameField.arrangedSubviews{
+                                self.gameField.removeArrangedSubview(toRemove)
+                            }
+                            self.genNewMaze()
+                        }
+                    }
+                }
+            case Movement.Up:
+                if self.player.y != HEIGHT-1 && maze[self.player.y+1][self.player.x].type != Tiles.Wall{
+                    self.player.y += 1
+                    if maze[self.player.y][self.player.x].type == Tiles.End{
+                        isMovable = false
+                        mStartY = HEIGHT - 1
+                        mStartX = self.player.x
+                        DispatchQueue.main.async{
+                            for toRemove in self.gameField.arrangedSubviews{
+                                self.gameField.removeArrangedSubview(toRemove)
+                            }
+                            self.genNewMaze()
+                        }
+                    }
+                }
+            case Movement.Right:
+                if self.player.x != WIDTH-1 && maze[self.player.y][self.player.x+1].type != Tiles.Wall{
+                    self.player.x += 1
+                    if maze[self.player.y][self.player.x].type == Tiles.End{
+                        isMovable = false
+                        mStartY = self.player.y
+                        mStartX = 0
+                        DispatchQueue.main.async{
+                            for toRemove in self.gameField.arrangedSubviews{
+                                self.gameField.removeArrangedSubview(toRemove)
+                            }
+                            self.genNewMaze()
+                        }
+                    }
+                }
+            case Movement.Left:
+                if self.player.x != 0 && maze[self.player.y][self.player.x-1].type != Tiles.Wall{
+                    self.player.x -= 1
+                    if maze[self.player.y][self.player.x].type == Tiles.End{
+                        isMovable = false
+                        mStartY = self.player.y
+                        mStartX = WIDTH - 1
+                        DispatchQueue.main.async{
+                            for toRemove in self.gameField.arrangedSubviews{
+                                self.gameField.removeArrangedSubview(toRemove)
+                            }
+                            self.genNewMaze()
+                        }
+                    }
+                }
+            }
+        }
+    }
+    // Radians to degrees conversion
+    func degrees(radians: Double) -> Double {
+        return 180/Double.pi * radians
+    }
 
     //generate new maze, relocate player
     func genNewMaze(){
-        maze = genMaze(Height: HEIGHT, Width: WIDHT, StartY: mStartY, StartX: mStartX)
+        maze = genMaze(Height: HEIGHT, Width: WIDTH, StartY: mStartY, StartX: mStartX)
         self.player.x = mStartX
         self.player.y = mStartY
         
@@ -197,21 +193,19 @@ class ViewController: UIViewController {
             hstackview.axis = UILayoutConstraintAxis.horizontal
             hstackview.distribution = UIStackViewDistribution.fillEqually
             for col in row{
-                let tile = UILabel()
+                let tile :UIImageView
                 switch col.type {
                 case Tiles.Wall:
-                    tile.backgroundColor = wallColor
+                    tile = UIImageView(image: wallImg!)
                 case Tiles.Space:
-                    tile.backgroundColor = spaceColor
+                    tile = UIImageView(image: spaceImg!)
                 case Tiles.Start:
-                    tile.backgroundColor = startColor
+                    tile = UIImageView(image: startImg!)
                 case Tiles.End:
-                    tile.backgroundColor = endColor
+                    tile = UIImageView(image: endImg!)
                 }
                 hstackview.addArrangedSubview(tile)
             }
-            
-            FRAME_SIZE = hstackview.subviews[0].frame
             gameField.addArrangedSubview(hstackview)
         }
         playBGMusic(fileNamed: "bensound-epic.mp3")
