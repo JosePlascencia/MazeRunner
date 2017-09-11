@@ -28,10 +28,10 @@
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="CYt-7w-LrA">
                                 <rect key="frame" x="16" y="576" width="343" height="36"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bar.png" translatesAutoresizingMaskIntoConstraints="NO" id="YXN-C7-v4T">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bar" translatesAutoresizingMaskIntoConstraints="NO" id="YXN-C7-v4T">
                                         <rect key="frame" x="0.0" y="0.0" width="166.5" height="36"/>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bar.png" translatesAutoresizingMaskIntoConstraints="NO" id="Mv1-i5-ROG">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bar" translatesAutoresizingMaskIntoConstraints="NO" id="Mv1-i5-ROG">
                                         <rect key="frame" x="176.5" y="0.0" width="166.5" height="36"/>
                                     </imageView>
                                 </subviews>
@@ -39,7 +39,7 @@
                                     <constraint firstAttribute="height" constant="36" id="Msx-8c-Esr"/>
                                 </constraints>
                             </stackView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bar.png" translatesAutoresizingMaskIntoConstraints="NO" id="2aw-rV-Pie">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bar" translatesAutoresizingMaskIntoConstraints="NO" id="2aw-rV-Pie">
                                 <rect key="frame" x="16" y="627" width="343" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="0ly-p7-2ep"/>
@@ -82,7 +82,7 @@
                                     <constraint firstAttribute="height" constant="30" id="kn4-Aw-of1"/>
                                 </constraints>
                             </stackView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="dball.png" translatesAutoresizingMaskIntoConstraints="NO" id="OLF-dw-aA5">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="dball" translatesAutoresizingMaskIntoConstraints="NO" id="OLF-dw-aA5">
                                 <rect key="frame" x="16" y="192" width="19" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -118,7 +118,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="bar.png" width="1600" height="1600"/>
-        <image name="dball.png" width="2000" height="2000"/>
+        <image name="bar" width="510" height="312"/>
+        <image name="dball" width="2000" height="2000"/>
     </resources>
 </document>

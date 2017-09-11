@@ -15,10 +15,10 @@ class ViewController: UIViewController {
     //gameview
     @IBOutlet weak var gameField: UIStackView!
     
-    let wallImg = UIImage(named: "wall.jpg")
-    let spaceImg = UIImage(named: "space.jpg")
-    let startImg = UIImage(named: "start.jpg")
-    let endImg = UIImage(named: "end.jpg")
+    let wallImg = UIImage(named: "wall")
+    let spaceImg = UIImage(named: "space")
+    let startImg = UIImage(named: "space")
+    let endImg = UIImage(named: "end")
     
     var backGroundPlayer = AVAudioPlayer()
     
@@ -61,7 +61,7 @@ class ViewController: UIViewController {
             if manager.isDeviceMotionAvailable {
                 print("We can detect motion!")
                 let myq = OperationQueue()
-                manager.deviceMotionUpdateInterval = 1
+                manager.deviceMotionUpdateInterval = 0.1
                 manager.startDeviceMotionUpdates(to: myq){
                     (data: CMDeviceMotion?, error: Error?) in
                     if let mydata = data {
@@ -69,27 +69,25 @@ class ViewController: UIViewController {
                         let pitch = self.degrees(radians: attitude.pitch)
                         let roll = self.degrees(radians: attitude.roll)
                         
-                        if abs(pitch) < abs(roll){
-                            if roll > 5{
-                                self.movePlayer(moveTo: Movement.Down)
-                            }else if roll < -5 {
+                        if abs(pitch) > abs(roll){
+                            if pitch > 5{
                                 self.movePlayer(moveTo: Movement.Up)
+                            }else if pitch < -5 {
+                                self.movePlayer(moveTo: Movement.Down)
                             }
                         }else {
-                            if pitch > 5 {
+                            if roll > 5 {
                                 self.movePlayer(moveTo: Movement.Right)
-                            }else if pitch < -5 {
+                            }else if roll < -5 {
                                 self.movePlayer(moveTo: Movement.Left)
                             }
                         }
-                        
                         self.displayPlayer()
                     }
                 }
             }
             else {
                 print("We cannot detect motion")
-                self.displayPlayer()
             }
         }
         else {
@@ -104,15 +102,21 @@ class ViewController: UIViewController {
     }
     
     func displayPlayer(){
-        DispatchQueue.main.async{
-            let w = self.gameField.subviews[self.player.y].subviews[self.player.x].frame.size.width
-            let h = self.gameField.subviews[self.player.y].subviews[self.player.x].frame.size.height
-            
-            self.player_sprite.frame = CGRect(x: self.gameField.frame.origin.x + (CGFloat(self.player.x) * w), y: self.gameField.frame.origin.y + (CGFloat(self.player.y) * h), width: w, height: h)
+        if isMovable{
+            DispatchQueue.main.async{
+                print(self.player)
+                self.view.bringSubview(toFront: self.player_sprite)
+                let w = self.gameField.subviews[self.player.y].subviews[self.player.x].frame.size.width
+                let h = self.gameField.subviews[self.player.y].subviews[self.player.x].frame.size.height
+                
+                self.player_sprite.frame = CGRect(x: self.gameField.frame.origin.x + (CGFloat(self.player.x) * w), y: self.gameField.frame.origin.y + (CGFloat(self.player.y) * h), width: w, height: h)
+            }
         }
     }
+    
     func movePlayer(moveTo: Movement){
-        if isMovable{
+        
+        if isMovable {
             switch moveTo {
             case Movement.Down:
                 if self.player.y != 0 && maze[self.player.y-1][self.player.x].type != Tiles.Wall{
@@ -121,11 +125,13 @@ class ViewController: UIViewController {
                         isMovable = false
                         mStartY = 0
                         mStartX = self.player.x
+                        self.player.y = 0
                         DispatchQueue.main.async{
-                            for toRemove in self.gameField.arrangedSubviews{
-                                self.gameField.removeArrangedSubview(toRemove)
+                            for toRemove in self.gameField.subviews{
+                                toRemove.removeFromSuperview()
                             }
                             self.genNewMaze()
+                            self.isMovable = true
                         }
                     }
                 }
@@ -135,12 +141,14 @@ class ViewController: UIViewController {
                     if maze[self.player.y][self.player.x].type == Tiles.End{
                         isMovable = false
                         mStartY = HEIGHT - 1
+                        self.player.y = HEIGHT - 1
                         mStartX = self.player.x
                         DispatchQueue.main.async{
-                            for toRemove in self.gameField.arrangedSubviews{
-                                self.gameField.removeArrangedSubview(toRemove)
+                            for toRemove in self.gameField.subviews{
+                                toRemove.removeFromSuperview()
                             }
                             self.genNewMaze()
+                            self.isMovable = true
                         }
                     }
                 }
@@ -151,11 +159,13 @@ class ViewController: UIViewController {
                         isMovable = false
                         mStartY = self.player.y
                         mStartX = 0
+                        self.player.x = 0
                         DispatchQueue.main.async{
-                            for toRemove in self.gameField.arrangedSubviews{
-                                self.gameField.removeArrangedSubview(toRemove)
+                            for toRemove in self.gameField.subviews{
+                                toRemove.removeFromSuperview()
                             }
                             self.genNewMaze()
+                            self.isMovable = true
                         }
                     }
                 }
@@ -166,11 +176,14 @@ class ViewController: UIViewController {
                         isMovable = false
                         mStartY = self.player.y
                         mStartX = WIDTH - 1
+                        self.player.x = WIDTH - 1
                         DispatchQueue.main.async{
-                            for toRemove in self.gameField.arrangedSubviews{
-                                self.gameField.removeArrangedSubview(toRemove)
+                            for toRemove in self.gameField.subviews{
+                                print(self.gameField.subviews.count)
+                                toRemove.removeFromSuperview()
                             }
                             self.genNewMaze()
+                            self.isMovable = true
                         }
                     }
                 }

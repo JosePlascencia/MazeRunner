@@ -17,12 +17,6 @@
 		82096E3C1F63B28C00AF1837 /* MazeRunnerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82096E3B1F63B28C00AF1837 /* MazeRunnerUITests.swift */; };
 		82096E4E1F63CD5E00AF1837 /* genmaze.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82096E4D1F63CD5E00AF1837 /* genmaze.swift */; };
 		82096E501F63CD9100AF1837 /* bensound-epic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 82096E4F1F63CD9100AF1837 /* bensound-epic.mp3 */; };
-		82096EDB1F65DBC200AF1837 /* end.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82096ED71F65DBC200AF1837 /* end.jpg */; };
-		82096EDC1F65DBC200AF1837 /* space.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82096ED81F65DBC200AF1837 /* space.jpg */; };
-		82096EDE1F65DBC200AF1837 /* wall.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 82096EDA1F65DBC200AF1837 /* wall.jpeg */; };
-		82096EE01F65F15500AF1837 /* bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 82096EDF1F65F15500AF1837 /* bar.png */; };
-		82096EE21F65F8EF00AF1837 /* bar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82096EE11F65F8EF00AF1837 /* bar.jpg */; };
-		82096EE41F65FD8400AF1837 /* dball.png in Resources */ = {isa = PBXBuildFile; fileRef = 82096EE31F65FD8400AF1837 /* dball.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,12 +53,6 @@
 		82096E3D1F63B28C00AF1837 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82096E4D1F63CD5E00AF1837 /* genmaze.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = genmaze.swift; sourceTree = "<group>"; };
 		82096E4F1F63CD9100AF1837 /* bensound-epic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "bensound-epic.mp3"; sourceTree = "<group>"; };
-		82096ED71F65DBC200AF1837 /* end.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = end.jpg; sourceTree = "<group>"; };
-		82096ED81F65DBC200AF1837 /* space.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = space.jpg; sourceTree = "<group>"; };
-		82096EDA1F65DBC200AF1837 /* wall.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wall.jpeg; sourceTree = "<group>"; };
-		82096EDF1F65F15500AF1837 /* bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar.png; sourceTree = "<group>"; };
-		82096EE11F65F8EF00AF1837 /* bar.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bar.jpg; sourceTree = "<group>"; };
-		82096EE31F65FD8400AF1837 /* dball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dball.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,12 +103,6 @@
 		82096E171F63B28B00AF1837 /* MazeRunner */ = {
 			isa = PBXGroup;
 			children = (
-				82096EE31F65FD8400AF1837 /* dball.png */,
-				82096EE11F65F8EF00AF1837 /* bar.jpg */,
-				82096EDF1F65F15500AF1837 /* bar.png */,
-				82096ED71F65DBC200AF1837 /* end.jpg */,
-				82096ED81F65DBC200AF1837 /* space.jpg */,
-				82096EDA1F65DBC200AF1837 /* wall.jpeg */,
 				82096E4F1F63CD9100AF1837 /* bensound-epic.mp3 */,
 				82096E4D1F63CD5E00AF1837 /* genmaze.swift */,
 				82096E181F63B28B00AF1837 /* AppDelegate.swift */,
@@ -220,6 +202,7 @@
 				TargetAttributes = {
 					82096E141F63B28B00AF1837 = {
 						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = 6M9EHG94EJ;
 						ProvisioningStyle = Automatic;
 					};
 					82096E2B1F63B28B00AF1837 = {
@@ -259,15 +242,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82096EE01F65F15500AF1837 /* bar.png in Resources */,
-				82096EE41F65FD8400AF1837 /* dball.png in Resources */,
-				82096EE21F65F8EF00AF1837 /* bar.jpg in Resources */,
 				82096E261F63B28B00AF1837 /* LaunchScreen.storyboard in Resources */,
 				82096E231F63B28B00AF1837 /* Assets.xcassets in Resources */,
-				82096EDB1F65DBC200AF1837 /* end.jpg in Resources */,
 				82096E1E1F63B28B00AF1837 /* Main.storyboard in Resources */,
-				82096EDE1F65DBC200AF1837 /* wall.jpeg in Resources */,
-				82096EDC1F65DBC200AF1837 /* space.jpg in Resources */,
 				82096E501F63CD9100AF1837 /* bensound-epic.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -450,11 +427,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 6M9EHG94EJ;
 				INFOPLIST_FILE = MazeRunner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.TheJJJImrons.MazeRunner;
+				PRODUCT_BUNDLE_IDENTIFIER = com.TheJJJImrons;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -463,11 +442,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 6M9EHG94EJ;
 				INFOPLIST_FILE = MazeRunner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.TheJJJImrons.MazeRunner;
+				PRODUCT_BUNDLE_IDENTIFIER = com.TheJJJImrons;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
