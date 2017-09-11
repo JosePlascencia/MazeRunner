@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     
     let wallImg = UIImage(named: "wall")
     let spaceImg = UIImage(named: "space")
-    let startImg = UIImage(named: "space")
+    let startImg = UIImage(named: "start")
     let endImg = UIImage(named: "end")
     
     var backGroundPlayer = AVAudioPlayer()
@@ -50,7 +50,6 @@ class ViewController: UIViewController {
     //game vars
     var score = 0
     var steps = 200
-    
     //Motion Manager
     var motionManager: CMMotionManager?
     
@@ -64,7 +63,7 @@ class ViewController: UIViewController {
             if manager.isDeviceMotionAvailable {
                 print("We can detect motion!")
                 let myq = OperationQueue()
-                manager.deviceMotionUpdateInterval = 0.1
+                manager.deviceMotionUpdateInterval = 0.2
                 manager.startDeviceMotionUpdates(to: myq){
                     (data: CMDeviceMotion?, error: Error?) in
                     if let mydata = data {
@@ -104,33 +103,6 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func updateScore() {
-        score += 69
-        DispatchQueue.main.async{
-            self.scoreField.text = String(self.score)
-        }
-    }
-    
-    func updateSteps() {
-        steps -= 1
-        if steps == 0 {
-            DispatchQueue.main.async{
-                self.isMovable = false
-                let rect = CGRect(x: (self.view.frame.width/2)-50, y: (self.view.frame.height/2)-50, width: 100, height: 100)
-                let label = UILabel(frame: rect)
-                label.text = "GAME OVER"
-                label.textColor = UIColor.red
-                label.backgroundColor = UIColor.black
-                label.tag = 69
-                self.view.addSubview(label)
-                self.isMovable = false
-            }
-        }
-        DispatchQueue.main.async{
-            self.stepsField.text = String(self.steps)
-        }
-    }
-    
     @IBAction func restartButtonPressed(_ sender: Any) {
         isMovable = false
         mStartY = 20
@@ -144,10 +116,9 @@ class ViewController: UIViewController {
             self.genNewMaze()
             self.isMovable = true
         }
-        self.updateSteps()
-        self.updateScore()
         score = 0
         steps = 200
+        self.updateLabels()
         if let gameOver = self.view.viewWithTag(69) as? UILabel {
             gameOver.removeFromSuperview()
         }
@@ -157,11 +128,11 @@ class ViewController: UIViewController {
     func displayPlayer(){
         if isMovable{
             DispatchQueue.main.async{
-//                print(self.player)
                 self.view.bringSubview(toFront: self.player_sprite)
                 let w = self.gameField.subviews[self.player.y].subviews[self.player.x].frame.size.width
                 let h = self.gameField.subviews[self.player.y].subviews[self.player.x].frame.size.height
                 
+                print("x: \(self.gameField.frame.origin.x + (CGFloat(self.player.x) * w)) y: \(self.gameField.frame.origin.y + (CGFloat(self.player.y) * h))")
                 self.player_sprite.frame = CGRect(x: self.gameField.frame.origin.x + (CGFloat(self.player.x) * w), y: self.gameField.frame.origin.y + (CGFloat(self.player.y) * h), width: w, height: h)
             }
         }
@@ -174,95 +145,80 @@ class ViewController: UIViewController {
             case Movement.Down:
                 if self.player.y != 0 && maze[self.player.y-1][self.player.x].type != Tiles.Wall{
                     self.player.y -= 1
-                    print(steps)
-                    print(score)
-                    self.updateSteps()
-                    self.updateScore()
-                    if maze[self.player.y][self.player.x].type == Tiles.End{
-                        isMovable = false
-                        mStartY = 0
-                        mStartX = self.player.x
-                        self.player.y = 0
-                        steps += 20
-                        DispatchQueue.main.async{
-                            for toRemove in self.gameField.subviews{
-                                toRemove.removeFromSuperview()
-                            }
-                            self.genNewMaze()
-                            self.isMovable = true
-                        }
-                    }
+                    mStartY = 0
+                    mStartX = self.player.x
+                    self.legalMove()
                 }
             case Movement.Up:
                 if self.player.y != HEIGHT-1 && maze[self.player.y+1][self.player.x].type != Tiles.Wall{
                     self.player.y += 1
-                    print(steps)
-                    print(score)
-                    self.updateSteps()
-                    self.updateScore()
-                    if maze[self.player.y][self.player.x].type == Tiles.End{
-                        isMovable = false
-                        mStartY = HEIGHT - 1
-                        self.player.y = HEIGHT - 1
-                        mStartX = self.player.x
-                        steps += 20
-                        DispatchQueue.main.async{
-                            for toRemove in self.gameField.subviews{
-                                toRemove.removeFromSuperview()
-                            }
-                            self.genNewMaze()
-                            self.isMovable = true
-                        }
-                    }
+                    mStartY = HEIGHT - 1
+                    mStartX = self.player.x
+                    self.legalMove()
                 }
             case Movement.Right:
                 if self.player.x != WIDTH-1 && maze[self.player.y][self.player.x+1].type != Tiles.Wall{
                     self.player.x += 1
-                    print(steps)
-                    print(score)
-                    self.updateSteps()
-                    self.updateScore()
-                    if maze[self.player.y][self.player.x].type == Tiles.End{
-                        isMovable = false
-                        mStartY = self.player.y
-                        mStartX = 0
-                        self.player.x = 0
-                        steps += 20
-                        DispatchQueue.main.async{
-                            for toRemove in self.gameField.subviews{
-                                toRemove.removeFromSuperview()
-                            }
-                            self.genNewMaze()
-                            self.isMovable = true
-                        }
-                    }
+                    mStartY = self.player.y
+                    mStartX = 0
+                    self.legalMove()
                 }
             case Movement.Left:
                 if self.player.x != 0 && maze[self.player.y][self.player.x-1].type != Tiles.Wall{
                     self.player.x -= 1
-                    print(steps)
-                    print(score)
-                    self.updateSteps()
-                    self.updateScore()
-                    if maze[self.player.y][self.player.x].type == Tiles.End{
-                        isMovable = false
-                        mStartY = self.player.y
-                        mStartX = WIDTH - 1
-                        self.player.x = WIDTH - 1
-                        steps += 20
-                        DispatchQueue.main.async{
-                            for toRemove in self.gameField.subviews{
-//                                print(self.gameField.subviews.count)
-                                toRemove.removeFromSuperview()
-                            }
-                            self.genNewMaze()
-                            self.isMovable = true
-                        }
-                    }
+                    mStartY = self.player.y
+                    mStartX = WIDTH - 1
+                    self.legalMove()
                 }
             }
         }
     }
+    
+    func legalMove(){
+        self.backGroundPlayer.rate = 1 + (1 - Float(steps)/200)
+        self.steps -= 1
+        self.score += 69
+        if maze[self.player.y][self.player.x].type == Tiles.End{
+            isMovable = false
+            if self.steps < 100{
+                self.steps += 100
+            }
+            else{
+                self.steps = 200
+            }
+            self.player.x = mStartX
+            self.player.y = mStartY
+            DispatchQueue.main.async{
+                for toRemove in self.gameField.subviews{
+                    toRemove.removeFromSuperview()
+                }
+                self.genNewMaze()
+                self.isMovable = true            }
+        }
+        self.updateLabels()
+    }
+    
+    func updateLabels() {
+        if steps == 0 {
+            DispatchQueue.main.async{
+                self.isMovable = false
+                let rect = CGRect(x: (self.view.frame.width/2)-50, y: (self.view.frame.height/2)-50, width: 100, height: 100)
+                let label = UILabel(frame: rect)
+                label.text = "GAME OVER"
+                label.textColor = UIColor.red
+                label.backgroundColor = UIColor.black
+                label.tag = 69
+                self.view.addSubview(label)
+                self.isMovable = false
+                self.playBGMusic(fileNamed: "bensound-love.mp3")
+            }
+        }
+        DispatchQueue.main.async{
+            self.stepsField.text = String(self.steps)
+            self.scoreField.text = String(self.score)
+        }
+    }
+    
     // Radians to degrees conversion
     func degrees(radians: Double) -> Double {
         return 180/Double.pi * radians
@@ -300,6 +256,7 @@ class ViewController: UIViewController {
     //Play Background Music
     func playBGMusic(fileNamed: String){
         let url = Bundle.main.url(forResource: fileNamed, withExtension: nil)
+        
         guard let newUrl = url else{
             print ("Could not find sound file")
             return
@@ -308,6 +265,7 @@ class ViewController: UIViewController {
             backGroundPlayer = try AVAudioPlayer(contentsOf: newUrl)
             backGroundPlayer.numberOfLoops = -1
             backGroundPlayer.prepareToPlay()
+            backGroundPlayer.enableRate = true;
             backGroundPlayer.play()
         }
         catch let error as NSError{

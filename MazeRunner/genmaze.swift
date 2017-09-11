@@ -85,7 +85,7 @@ func genMaze(Height: Int, Width: Int, StartY: Int, StartX: Int) -> [[Cell]]{
             stack.append(current)
         }
         else{
-            if !ended{
+            if !ended && stack.count > 40{
                 if current.x == 1 {
                     maze[current.y][0].type = Tiles.End
                     ended = true
